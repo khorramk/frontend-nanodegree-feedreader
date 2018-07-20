@@ -31,30 +31,89 @@ $(function() {
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
-
+        it('loops through allfeeds', function(){
+            allFeeds.forEach(function(obj){
+                expect(obj.url).toBeDefined();
+                expect(obj.url).not.toBe(undefined);
+            })
+        })
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+
+         it('name defined in feeds', function(){
+              allFeeds.forEach(function(obj){
+                  expect(obj.name).toBeDefined();
+                  expect(obj.name).not.toBe(undefined);
+              })
+         })
     });
 
 
     /* TODO: Write a new test suite named "The menu" */
+    describe('The menu', function(){
 
+    
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
-
+        const menu = document.querySelector('.menu-hidden');
+        const clickableMenu = document.querySelector('.menu-icon-link');
+         it('menu hidden', function(){
+            
+             expect(menu.classList.contains('menu-hidden')).toBe(true);
+         })
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
 
+          it('visibility of menu', function(){
+              
+              var simulateClick = function (elem) {
+                  // Create our event (with options)
+                  var evt = new MouseEvent('click', {
+                      bubbles: true,
+                      cancelable: true,
+                      view: window
+                  });
+                  // If cancelled, don't dispatch our event
+                  var canceled = !elem.dispatchEvent(evt);
+              };
+
+          
+              simulateClick(clickableMenu);
+
+
+              expect(menu.classList.contains('menu-hidden')).toBe(false);
+
+            
+              simulateClick(clickableMenu);
+
+              
+              expect(menu.classList.contains('menu-hidden')).toBe(true);
+               
+           
+              
+         
+            
+                
+             
+          
+              
+             
+
+          });
+    });
     /* TODO: Write a new test suite named "Initial Entries" */
+    describe('Initial Entries', function(){
+
+    
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -62,11 +121,48 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+          
+        
+         
+
+         beforeEach(function(done){
+             loadFeed(0, function(){
+               done();
+             })
+         });
+       it('load Feed', function(){
+            const entries = document.querySelector('.entry').childNodes;
+            expect(entries.length).toBeGreaterThan(0);
+       });
+
+    });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function(){
 
+    
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-}());
+
+         var firstfeed, secondFeed;
+         beforeEach(function(done){
+                loadFeed(1, function(){
+
+                    firstfeed = document.querySelector('.feed').innerHTML;
+
+                    loadFeed(0, function(){
+                        secondFeed = document.querySelector('.feed').innerHTML;
+                         done();
+                    })
+                })
+         });
+
+         it('changing content', function(){
+                expect(firstfeed).not.toBe(secondFeed);
+         });
+
+    });
+
+})();
