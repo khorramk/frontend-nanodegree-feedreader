@@ -23,7 +23,7 @@ $(function() {
          */
         it('are defined', function() {
             expect(allFeeds).toBeDefined();
-            expect(allFeeds.length).not.toBe(0);
+            expect(allFeeds.length).toBeGreaterThan(0);
         });
 
 
@@ -34,7 +34,7 @@ $(function() {
         it('loops through allfeeds', function(){
             allFeeds.forEach(function(obj){
                 expect(obj.url).toBeDefined();
-                expect(obj.url).not.toBe(undefined);
+                expect(obj.url.length).toBeGreaterThan(0);
             })
         })
 
@@ -46,7 +46,7 @@ $(function() {
          it('name defined in feeds', function(){
               allFeeds.forEach(function(obj){
                   expect(obj.name).toBeDefined();
-                  expect(obj.name).not.toBe(undefined);
+                  expect(obj.name.constructor).toBe(String);
               })
          })
     });
@@ -131,7 +131,7 @@ $(function() {
              })
          });
        it('load Feed', function(){
-            const entries = document.querySelector('.entry').childNodes;
+            const entries = document.querySelectorAll('.feed .entry');
             expect(entries.length).toBeGreaterThan(0);
        });
 
