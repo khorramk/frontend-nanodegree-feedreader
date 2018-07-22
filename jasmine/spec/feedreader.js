@@ -53,11 +53,11 @@ $(function () {
 
             simulateClick(clickableMenu);
 
-            expect($('body').hasClass('menu-hidden').toBe(false);
+            expect($('body').hasClass('menu-hidden')).toBe(false);
 
             simulateClick(clickableMenu);
 
-            expect($('body').hasClass('menu-hidden').toBe(true);
+            expect($('body').hasClass('menu-hidden')).toBe(true);
 
 
         });
